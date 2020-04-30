@@ -1,22 +1,16 @@
-const { src, dest, watch, series } = require("gulp");
+const { src, dest } = require("gulp");
 const sass = require("gulp-sass");
 const sassGlob = require("gulp-sass-glob");
 
-const devSassPath = "_dev/scss/common.scss"
-const watchSassPath = "_dev/scss/**/*.scss"
-const destCssPath = "dest/assets/css"
-
-const compileSass = () => {
-  return src(devSassPath)
+const compileScss = () => {
+  return src("_dev/scss/common.scss")
     .pipe(sassGlob())
     .pipe(
       sass({
         outputStyle: "expanded"
       })
     )
-    .pipe(dest(destCssPath));
+    .pipe(dest("dest/assets/css"));
 }
 
-const watchSassFiles = () => watch(watchSassPath, compileSass);
-
-exports.default = series(compileSass, watchSassFiles);
+exports.scss = compileScss;

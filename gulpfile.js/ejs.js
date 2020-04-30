@@ -1,16 +1,12 @@
-const { src, dest, watch, series } = require("gulp");
-const ejs = require('gulp-ejs');
-
-const devEjsPath = "_dev/ejs/index.ejs"
-const watchEjsPath = "_dev/ejs/**/*.ejs"
-const destEjsPath = "dest/"
+const { src, dest } = require("gulp")
+const rename = require("gulp-rename")
+const ejs = require('gulp-ejs')
 
 const compileEjs = () => {
-  return src(devEjsPath)
+  return src("_dev/ejs/index.ejs")
     .pipe(ejs())
-    .pipe(dest(destEjsPath))
-};
+    .pipe(rename({ extname: '.html' }))
+    .pipe(dest("dest/"))
+}
 
-const watchEjsFiles = () => watch(watchEjsPath, compileEjs)
-
-exports.default = series(compileEjs, watchEjsFiles);
+exports.ejs = compileEjs;
